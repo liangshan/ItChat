@@ -547,9 +547,9 @@ class client:
                 return '', content
 
         ActualUserName, Content = get_msg_from_raw(msg['Content'])
-        isAt = self.storageClass.nickName in Content
-        if b'\342\200\205'.decode('utf8') in Content:
-            Content = Content.split(b'\342\200\205'.decode('utf8'))[1]
+        isAt = '@{}'.format(self.storageClass.nickName) in Content
+        # if b'\342\200\205'.decode('utf8') in Content:
+        #     Content = Content.split(b'\342\200\205'.decode('utf8'))[1]
         try:
             self.storageClass.groupDict[msg['FromUserName']][ActualUserName]
         except:
@@ -560,6 +560,7 @@ class client:
         additionalItems = {
             'ActualUserName': ActualUserName,
             'ActualNickName': ActualNickName,
+            'isAt': isAt,
             'Content': Content
         }
         return dict(msg, **additionalItems)
